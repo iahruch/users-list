@@ -9,6 +9,9 @@ import {UsersService} from '../shared/users.service';
 })
 export class UsersListComponent implements OnInit {
 
+  username: string;
+  name: string;
+  role: string;
   usersList: User[] = [];
   foods: any[] = [
     {value: '0', viewValue: 'от А до Я'},
@@ -26,8 +29,20 @@ export class UsersListComponent implements OnInit {
       this.usersList =  this.userService.findUser(query);
   }
 
-
   sort(value: string): void {
     this.usersList = this.userService.sortUser(value);
+  }
+
+  addUser() {
+    this.userService.addUser({
+      id: Math.floor((Math.random() *6 ) + 10),
+      name: this.name,
+      username: this.username,
+      email: '',
+      role: this.role,
+      phone: '',
+      website: ''
+    });
+    this.usersList = this.userService.getUsersList();
   }
 }

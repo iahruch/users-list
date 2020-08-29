@@ -119,4 +119,8 @@ export class UsersService {
       return this.usersList.sort( (a: User, b: User) => direction * (a.username >  b.username ? 1 : -1));
   }
 
+  addUser(data) {
+    this.usersList.unshift(data);
+  }
+
 }

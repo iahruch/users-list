@@ -1,4 +1,4 @@
-<section [ngClass]="{'search-section': true}">
+<section [ngClass]="{'section': true}">
   <mat-form-field appearance="outline">
     <mat-label>Сортировка пользователей</mat-label>
     <mat-select #sortValue (selectionChange)="sort(sortValue.value)">
@@ -10,25 +10,44 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Поиск</mat-label>
-    <input  matInput placeholder="Найти пользователя" #inp (keyup.enter)="search(inp.value)" >
-    <mat-icon matSuffix (click)="search(inp.value)"  >search</mat-icon>
+    <input matInput placeholder="Найти пользователя" #inp (keyup.enter)="search(inp.value)">
+    <mat-icon matSuffix (click)="search(inp.value)">search</mat-icon>
   </mat-form-field>
 </section>
 
-  <mat-selection-list #users>
-    <mat-list-option
-      *ngFor="let user of usersList; let i=index"
-      [ngClass]="{gray: i%2}"
-    >
-      <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between'}">
-        <span mat-line> {{ user.username }} </span>
-        <span mat-line> {{user.name}} </span>
-        <span mat-line> {{user.role}} </span>
-      </div>
-    </mat-list-option>
-  </mat-selection-list>
+<section [ngClass]="{'section': true}">
 
-  <p>
-    Options selected: {{users.selectedOptions.selected.length}}
-  </p>
+  <mat-form-field appearance="outline">
+    <mat-label>Username</mat-label>
+    <input matInput placeholder="Username" [(ngModel)]="username">
+  </mat-form-field>
 
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Name" [(ngModel)]="name">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>User role</mat-label>
+    <mat-select [(ngModel)]="role" >
+      <mat-option value="User">User</mat-option>
+      <mat-option value="Admin">Admin</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="addUser()">Add</button>
+</section>
+
+<mat-selection-list #users>
+  <mat-list-option *ngFor="let user of usersList; let i=index" [ngClass]="{gray: i%2}">
+    <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between'}">
+      <span mat-line> {{ user.username }} </span>
+      <span mat-line> {{user.name}} </span>
+      <span mat-line> {{user.role}} </span>
+    </div>
+  </mat-list-option>
+</mat-selection-list>
+
+<p>
+  Options selected: {{users.selectedOptions.selected.length}}
+</p>
