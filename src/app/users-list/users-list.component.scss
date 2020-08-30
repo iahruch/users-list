@@ -2,8 +2,11 @@
   background-color: #ccc;
 }
 
-.search-section {
+.section, .line {
   display: flex;
   justify-content: space-between;
-
+  align-items: center;
+}
+.mat-selection-list {
+  margin: 25px 0;
 }

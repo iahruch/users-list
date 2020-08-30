@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../shared/models/User';
 import {UsersService} from '../shared/users.service';
+import {MatListOption} from '@angular/material/list';
 
 @Component({
   selector: 'app-users-list',
@@ -13,6 +14,8 @@ export class UsersListComponent implements OnInit {
   name: string;
   role: string;
   usersList: User[] = [];
+  selectedUsers: User[];
+
   foods: any[] = [
     {value: '0', viewValue: 'от А до Я'},
     {value: '1', viewValue: 'от Я до А'}
@@ -33,9 +36,9 @@ export class UsersListComponent implements OnInit {
     this.usersList = this.userService.sortUser(value);
   }
 
-  addUser() {
+  addUser(): void {
     this.userService.addUser({
-      id: Math.floor((Math.random() *6 ) + 10),
+      id: Math.floor((Math.random() * 6 ) + 10),
       name: this.name,
       username: this.username,
       email: '',
@@ -44,5 +47,23 @@ export class UsersListComponent implements OnInit {
       website: ''
     });
     this.usersList = this.userService.getUsersList();
+    this.name = '';
+    this.username = '';
+    this.role = '';
   }
+
+  selectedItems(selectedUsers: MatListOption[]): void {
+    this.selectedUsers = [];
+    selectedUsers.forEach( elem => {
+      this.selectedUsers.push(elem.value);
+      console.log(elem.value);
+    });
+  }
+
+  removeUsers(): void {
+    this.userService.removeUsers(this.selectedUsers);
+    this.usersList = this.userService.getUsersList();
+  }
+
+
 }

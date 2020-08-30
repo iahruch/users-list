@@ -119,8 +119,13 @@ export class UsersService {
       return this.usersList.sort( (a: User, b: User) => direction * (a.username >  b.username ? 1 : -1));
   }
 
-  addUser(data) {
+  addUser(data: User): void {
     this.usersList.unshift(data);
   }
 
+  removeUsers(selectedUsers: User[]): void {
+    selectedUsers.forEach( user => {
+      this.usersList = this.usersList.filter( item => item.id !== user.id);
+    })
+  }
 }

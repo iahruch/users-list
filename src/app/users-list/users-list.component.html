@@ -15,39 +15,62 @@
   </mat-form-field>
 </section>
 
-<section [ngClass]="{'section': true}">
+<section>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Username</mat-label>
-    <input matInput placeholder="Username" [(ngModel)]="username">
-  </mat-form-field>
+  <div [ngClass]="{'line': true}">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Username" [(ngModel)]="username">
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Name</mat-label>
-    <input matInput placeholder="Name" [(ngModel)]="name">
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" [(ngModel)]="name">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>User role</mat-label>
+      <mat-select [(ngModel)]="role" >
+        <mat-option value="User">User</mat-option>
+        <mat-option value="Admin">Admin</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>User role</mat-label>
-    <mat-select [(ngModel)]="role" >
-      <mat-option value="User">User</mat-option>
-      <mat-option value="Admin">Admin</mat-option>
-    </mat-select>
-  </mat-form-field>
+  </div>
 
-  <button mat-raised-button color="primary" (click)="addUser()">Add</button>
+    <button mat-raised-button color="primary" (click)="addUser()">Add</button>
 </section>
 
-<mat-selection-list #users>
-  <mat-list-option *ngFor="let user of usersList; let i=index" [ngClass]="{gray: i%2}">
-    <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between'}">
-      <span mat-line> {{ user.username }} </span>
-      <span mat-line> {{user.name}} </span>
-      <span mat-line> {{user.role}} </span>
-    </div>
-  </mat-list-option>
-</mat-selection-list>
+<section *ngIf="usersList.length > 0; else emptyBlock ">
+  <mat-selection-list
+    #users
+    (selectionChange)="selectedItems(users.selectedOptions.selected)"
+  >
+    <mat-list-option
+      [value]="user"
+      *ngFor="let user of usersList; let i=index"
+      [ngClass]="{gray: i%2}"
+    >
+      <div [ngStyle]="{'display': 'flex', 'justify-content': 'space-between'}">
+        <span mat-line> {{ user.username }} </span>
+        <span mat-line> {{user.name}} </span>
+        <span mat-line> {{user.role}} </span>
+      </div>
+    </mat-list-option>
+  </mat-selection-list>
 
-<p>
-  Options selected: {{users.selectedOptions.selected.length}}
-</p>
+  <section [ngClass]="{'section': true}">
+    <p>
+      Вбрано пользователей: {{users.selectedOptions.selected.length}}
+    </p>
+    <p>
+      <button mat-raised-button color="warn" (click)="removeUsers()">Remove</button>
+    </p>
+  </section>
+</section>
+<section #emptyBlock>
+  <h1>Данных нет</h1>
+</section>
+
+
+
+
